@@ -1,0 +1,13 @@
+{% import "_macros/link.twig" as link %}
+
+{% block header %}
+    <ul>
+        {% for page in getPages('header') %}
+            <li>
+                {{ link.render(page.name, page.title, {
+                    'title': page.headline
+                }) }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

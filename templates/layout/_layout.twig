@@ -1,0 +1,88 @@
+{% import "_macros/link.twig" as link %}
+
+<!DOCTYPE html>
+<html lang="{{ session.language }}">
+<head>
+    <meta charset='UTF-8'>
+    <meta name='keywords' content='{{ getEnv("KEYWORDS") }}'>
+    <meta name='description' content='{{ getEnv("DESCRIPTION") }}'>
+    <meta name='subject' content='{{ getEnv("SUBJECT") }}'>
+    <meta name='copyright' content='{{ getEnv("COPYRIGHT") }}'>
+    <meta name='language' content='{{ session.language }}'>
+    <meta name='robots' content='{{ getEnv("ROBOTS") }}'>
+    <meta name='topic' content='{{ getEnv("TOPIC") }}'>
+    <meta name='author' content='{{ getEnv("AUTHOR") }}'>
+    <meta name='reply-to' content='{{ getEnv("REPLY_TO_EMAIL") }}'>
+    <meta name='owner' content='{{ getEnv("OWNER") }}'>
+    <meta name='url' content='{{ currentSite.url }}'>
+    <meta name='identifier-URL' content='{{ currentSite.url }}'>
+    <meta name='pagename' content='{{ getEnv("PAGE_NAME") }}'>
+    <meta name='category' content='{{ getEnv("CATEGORY") }}'>
+    <meta name='coverage' content='Worldwide'>
+    <meta name='distribution' content='Global'>
+    <meta name='rating' content='General'>
+    <meta name='revisit-after' content='7 days'>
+    <meta name='subtitle' content='{{ getPageTitle() }}'>
+    <meta name='target' content='all'>
+    <meta name='HandheldFriendly' content='True'>
+    <meta name='MobileOptimized' content='320'>
+    <meta name='date' content='{{ 'now'|date('d.m.Y') }}'>
+    <meta name='search_date' content='{{ 'now'|date('d.m.Y') }}'>
+    <meta name='DC.title' content='{{ getPageTitle() }}'>
+    <meta http-equiv='Expires' content='0'>
+    <meta http-equiv='Pragma' content='no-cache'>
+    <meta http-equiv='Cache-Control' content='no-cache'>
+    <meta http-equiv='imagetoolbar' content='no'>
+    <meta http-equiv='x-dns-prefetch-control' content='off'>
+
+    <link rel="icon" type="image/x-icon" href="{{ currentSite.url }}/favicon.jpg">
+
+    <title>{{ getPageTitle() }}</title>
+
+    {# add bootstrap #}
+    {% if config.useBootstrap is defined and config.useBootstrap %}
+        <link href="{{ getAsset('/vendor/bootstrap/css/bootstrap.min.css') }}"
+              rel="stylesheet"
+              integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+              crossorigin="anonymous">
+    {% endif %}
+
+    {# normal css here #}
+    <link href="{{ getAsset('/css/default.css') }}" rel="stylesheet">
+    <link href="{{ getAsset('/webpack/style.css') }}" rel="stylesheet">
+</head>
+
+<body>
+
+{% block header %}
+    {# will be overwritten in header.twig #}
+{% endblock %}
+
+<div id="{{ config.swapper.containerId }}" class="page-content">
+    {% block content %}
+        {# will be overwritten in page.twig #}
+    {% endblock %}
+</div>
+
+{# hidden home click #}
+{{ link.render('home', 'hidden click element', {
+    'id': 'hidden-click-element',
+    'hidden': true
+}) }}
+
+{% block footer %}
+    {# will be overwritten in footer.twig #}
+{% endblock %}
+
+{# add bootstrap #}
+{% if config.useBootstrap is defined and config.useBootstrap %}
+    <script src="{{ getAsset('/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+{% endif %}
+
+{# add the site module #}
+{% do includeSiteModule() %}
+
+</body>
+</html>

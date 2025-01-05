@@ -1,0 +1,55 @@
+{#
+Example usage:
+
+{% import '_macros/image.twig' as image %}
+{{ image.render('e36.png', 'avatar', {
+    'width': 250,
+    'height': 250,
+    'id': 'image_e36',
+    'class': ['responsive'],
+    'style': 'border-radius: 50%;',
+    'alt': 'E36 image',
+    'title': 'Image of an e36',
+    'lazyLoad': true
+}) }}
+#}
+
+{% macro render(src, type = 'general', config = {}) %}
+
+    {% set defaults = {
+        'width': null,
+        'height': null,
+        'id': null,
+        'class': null,
+        'style': null,
+        'alt': 'Image',
+        'title': 'Image',
+        'lazyLoad': true,
+        'hidden': false,
+        'resize': true
+    } %}
+
+    {% if config is defined and config is not empty %}
+        {% set options = defaults|merge(config) %}
+    {% else %}
+        {% set options = defaults %}
+    {% endif %}
+
+    {% set options = options|merge({
+        'src': getImageSource(src, type, options)
+    }) %}
+
+    <img
+            src="{{ options.src }}"
+            {% if options.class is not empty %}class="{{ options.class }}"{% endif %}
+            {% if options.style is not empty %}style="{{ options.style }}"{% endif %}
+            {% if options.id is not empty %}id="{{ options.id }}"{% endif %}
+            {% if options.width is not empty %}width="{{ options.width }}"{% endif %}
+            {% if options.height is not empty %}height="{{ options.height }}"{% endif %}
+            {% if options.title is not empty %}title="{{ options.title }}"{% endif %}
+            {% if options.alt is not empty %}alt="{{ options.alt }}"{% endif %}
+            {% if options.lazyLoad %}loading="lazy"{% endif %}
+            {% if options.hidden %}hidden{% endif %}
+    >
+
+{% endmacro %}

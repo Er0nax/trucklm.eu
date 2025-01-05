@@ -1,0 +1,51 @@
+{#
+Example usage:
+
+{% import '_macros/link.twig' as link %}
+{{ link.render('login', 'Login', {
+        'id': 'login-button-test-id',
+        'class': 'btn btn-primary',
+        'style': 'color: black;',
+        'title': 'Click here to login.',
+        'download': false,
+        'data': {
+            'foo': 'bar'
+        }
+    }) }}
+#}
+
+{% macro render(link, content, options = {}) %}
+
+    {% set defaults = {
+        'id': null,
+        'class': null,
+        'style': null,
+        'title': link ?? 'Link',
+        'download': false,
+        'hidden': false,
+        'data': {}
+    } %}
+
+    {% if options is defined and options is not empty %}
+        {% set options = defaults|merge(options) %}
+    {% else %}
+        {% set options = defaults %}
+    {% endif %}
+
+    <a
+            {% if options.id is not empty %}id="{{ options.id }}"{% endif %}
+            {% if options.class is not empty %}class="{{ options.class }}"{% endif %}
+            {% if options.style is not empty %}style="{{ options.style }}"{% endif %}
+            {% if options.title is not empty %}title="{{ options.title }}"{% endif %}
+            {% if link is not empty %}href="{{ link }}"{% endif %}
+            {% if options.download %}download{% endif %}
+            {% if options.hidden %}hidden{% endif %}
+            {% if config.useSwapper and not options.download %}{{ config.swapper.attributeName }}="{{ link }}"{% endif %}
+            {% for key, value in options.data %}
+                data-{{ key }}="{{ value }}"
+            {% endfor %}
+    >
+        {{ content|raw }}
+    </a>
+
+{% endmacro %}

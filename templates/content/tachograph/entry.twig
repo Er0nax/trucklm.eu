@@ -1,0 +1,97 @@
+{% import '_macros/image.twig' as image %}
+
+<h1>{{ 'Tachograph'|t('site') }}</h1>
+
+<div id="tachograph" style="width: 800px; position: absolute; top: 400px;">
+    {{ image.render('tacho.png', 'tacho', {
+        'width': 800,
+        'resize': false
+    }) }}
+
+    <style>
+        @font-face {
+            font-family: 'tachograph'; /*a name to be used later*/
+            src: url('{{ getAsset('/fonts/Tachograph.woff') }}'); /*URL to font*/
+        }
+
+        .tacho-display {
+            position: absolute;
+            height: 72px;
+            width: 321px;
+            top: 52px;
+            left: 56px;
+            opacity: 100%;
+        }
+
+        .tacho-display p {
+            color: black;
+            position: absolute;
+            font-size: 32px;
+            font-weight: bold;
+            font-family: tachograph, serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .tacho-buttons button {
+            opacity: 0;
+            position: absolute;
+            cursor: pointer;
+        }
+    </style>
+
+    <div class="tacho-display">
+
+        <div class="tacho-display-main" style="display: block;">
+            <p class="tacho-time"><!--
+            --><span class="tacho-time-hours">00</span><!--
+            --><span class="tacho-time-digit" style="margin: 0 1px 0 1px;">:</span><!--
+            --><span class="tacho-time-minutes">00</span><!--
+            --><span style="font-size: 20px;"> }</span> <!-- rewritten symbol for "local" in font -->
+            </p>
+
+            <p class="tacho-driver"
+               style="left: 150px;">]</p> <!-- rewritten symbol for "driver" in font -->
+
+            <p class="tacho-speed"
+               style="right: 0;">0km/h</p>
+
+            <p class="tacho-mode-card-one"
+               style="bottom: 0; left: 5px;">~</p>
+
+            <p class="tacho-inserted-card-one"
+               style="bottom: 0; left: 30px;">[</p>
+
+            <p class="tacho-distance"
+               style="bottom: 0; right: 50px;">0km</p>
+
+            <p class="tacho-inserted-card-two"
+               style="bottom: 0; right: 30px;"></p>
+
+            <p class="tacho-mode-card-two"
+               style="bottom: 0; right: 5px;">*</p>
+
+        </div>
+
+        <div class="tacho-display-reading-card" style="display: none;">
+            <p class="tacho-card-user" style="top: 0; left: 0;">Eronax</p>
+            <p class="tacho-card-loading" style="bottom: 0; left: 0;">▁▁▂▂▃▃▄▄▅▅▆▆▇▇</p>
+            <p class="tacho-card-driver" style="bottom: 0; right: 10px;">]</p>
+        </div>
+
+    </div>
+
+    <div class="tacho-buttons">
+        <!-- buttons driver card -->
+        <button id="tacho-card-one" style="top: 155px; left: 42px; width: 50px; height: 30px;">1</button>
+        <button id="tacho-card-one-out" style="top: 155px; left: 105px; width: 50px; height: 30px;">1OUT</button>
+        <button id="tacho-card-two-out" style="top: 155px; left: 270px; width: 50px; height: 30px;">2OUT</button>
+        <button id="tacho-card-two" style="top: 155px; left: 335px; width: 50px; height: 30px;">2</button>
+
+        <!-- buttons round nop -->
+        <button id="tacho-back" style="top: 103px; left: 532px;">◀️</button>
+        <button id="tacho-up" style="top: 68px; left: 570px;">🔼</button>
+        <button id="tacho-down" style="top: 135px; left: 565px;">🔽</button>
+        <button id="tacho-ok" style="top: 103px; left: 602px;">OK</button>
+    </div>
+</div>

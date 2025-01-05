@@ -1,0 +1,27 @@
+{% import "_macros/link.twig" as link %}
+
+{% block footer %}
+    <ul>
+        normal:
+        {% for page in getPages('footer', 'normal') %}
+            <li>
+                {{ link.render(page.name, page.title, {
+                    'title': page.headline
+                }) }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <br>
+
+    <ul>
+        info:
+        {% for page in getPages('footer', 'info') %}
+            <li>
+                {{ link.render(page.name, page.title, {
+                    'title': page.headline
+                }) }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
